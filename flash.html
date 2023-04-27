@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta content='width=device-width' name='viewport'>
+  <link rel="shortcut icon" href="pictures/frevic logo 2022.png">
+  <title>RC LSS Web Flasher</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="module" src="https://unpkg.com/esp-web-tools@7.3.1/dist/web/install-button.js?module">
+  </script>
+
+</head>
+
+<body onload="checkSupported()">
+  <div class="button-container">
+    <button class="button" onclick="window.location.href='index.html'">Home</button>
+    <button class="button" onclick="window.location.href='products.html'">Products and Manuals</button>
+    <button class="button" onclick="window.location.href='https://www.youtube.com/@frevictechnology/featured'"
+      target=”_blank”>My YouTube Channel</button>
+    <button class="button" onclick="window.location.href='https://www.facebook.com/profile.php?id=100066616574355&mibextid=ZbWKwL'"
+      target=”_blank”>My Facebook Page</button>
+  </div>
+
+  <img src="pictures/RC LSS V3X.jpg" alt="Logo" width="600">
+
+
+  <div class="main">
+    <h2>FRE-VIC RC Light and Sound System Web installer</h2>
+
+    <div id="flasher">
+
+      <p>This installer change the sounds to the RC LSS modules V3.X, please follow the instructions below:</p>
+
+      <ol>
+        <li>Connect your RC LSS device to a USB port </li>
+        <li>Select the Sound you want to install </li>
+        <li id="coms">Click "Connect" and then select the correct COM port. <a onclick="showSerialHelp()">No device
+            board found?</a></li>
+        <li>The programming will take less than 3 minutes</li>
+        <li>Restart the RC LSS</li>
+       
+      </ol><br><br>
+
+      <div class="container inst-button">
+
+        <!-- The selectable builds -->
+        <select id="ver" class="btn" onchange="setManifest()">
+          <optgroup label="Select Sound to install">
+            <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Freight_Liner_Cummins_350/manifest.json">
+              Freight Liner Cummins 350 Engine</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/GAZ_66/manifest.json">
+              GAZ 66</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Kenworth_Cummins_335/manifest.json">
+              Kenworth Cummins 335 Engine</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Kenworth_W900A_CAT_3408/manifest.json">
+              Kenworth W900A CAT 3408 Engine</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/M_35/manifest.json">
+              M 35</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Mack_Super_Liner/manifest.json">
+              Mack Super Liner</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Man_tgx/manifest.json">
+              MAN TGX</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Mercedes_Actros_1836/manifest.json">
+              Mercedes Actros 1836</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Mercedes_Actros_V6/manifest.json">
+              Mercedes Actros V6</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Peterbilt_Detroit/manifest.json">
+              Peterbilt Detroit</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Scania_143/manifest.json">
+              Scania 143</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Scania_V8_1000HP_Open_Pipes/manifest.json">
+              Scania V8 1000HP Open Pipes</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Scania_V8_1000HP_Open_Pipes_V2/manifest.json">
+              Scania V8 1000HP Open Pipes V2</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Unimog_1000/manifest.json">
+              Unimog 1000</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Ural_375/manifest.json">
+              URAL 375</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Ural_4320/manifest.json">
+              URAL 4320</option>
+
+              <option
+              data-manifest="webflash/RC_Lights_and_Sound_System/Volvo_FH16_750/manifest.json">
+              Volvo FH16 750</option>
+            
+          </optgroup>
+      
+
+        </select><br>
+
+        <esp-web-install-button id="inst">
+          <button class="btn" slot="activate">Connect</button>
+        </esp-web-install-button><br>
+
+      </div>
+      <br><br>Powered by <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a><br>
+      <br>
+      
+      <script>
+        function setManifest() {
+          var sel = document.getElementById('ver');
+          var opt = sel.options[sel.selectedIndex];
+          var m = opt.dataset.manifest;
+          var me = opt.dataset.ethernet;
+          document.getElementById('inst').setAttribute('manifest', m);
+        }
+
+        function checkSupported() {
+          if (document.getElementById('inst').hasAttribute('install-unsupported')) unsupported();
+          else setManifest();
+        }
+
+        function unsupported() {
+          document.getElementById('flasher').innerHTML = "Your Browser is not supported!<br>Please use Desktop Chrome or Edge.<br>"
+        }
+
+        function showSerialHelp() {
+          document.getElementById('coms').innerHTML = `To proceed, click "Connect" and then select the correct COM port.<br><br>
+    You may need drivers for your board.<br>
+    Download and intall the driver from this link:<br>
+    <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads" target="_blank">CP2102</a><br><br>
+    `;
+        }
+      </script>
+</body>
+
+</html>
